@@ -148,46 +148,13 @@
   </dependencies>
 
   <build>
-    <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
         </plugin>
-        <plugin>
-          <groupId>org.jetbrains.kotlin</groupId>
-          <artifactId>kotlin-maven-plugin</artifactId>
-          <version>${kotlin.version}</version>
-          <executions>
-            <execution>
-              <id>compile</id>
-              <phase>process-sources</phase>
-              <goals>
-                <goal>compile</goal>
-              </goals>
-              <configuration>
-                <sourceDirs>
-                  <source>src/main/java</source>
-                  <source>target/generated-sources/annotations</source>
-                </sourceDirs>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>com.heroku.sdk</groupId>
-          <artifactId>heroku-maven-plugin</artifactId>
-          <version>3.0.3</version>
-          <configuration>
-            <appName>reddit-app-ken</appName>
-            <processTypes>
-              <web>java -jar -Dserver.port=$PORT
-                target/reddit.jar</web>
-            </processTypes>
-          </configuration>
-        </plugin>
+       
       </plugins>
-    </pluginManagement>
   </build>
 
 </project>

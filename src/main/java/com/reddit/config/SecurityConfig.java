@@ -21,8 +21,6 @@ import com.reddit.security.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-  @Autowired
-  private AuthEntryPointJwt unauthorizedHandler;
 
   @Autowired
   private UserDetailsService userDetailsService;
@@ -40,11 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.cors().and()
         .csrf().disable()
-        .exceptionHandling()
-        .authenticationEntryPoint(unauthorizedHandler).and()
+        .exceptionHandling().and()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests()
+        .antMatchers("/api/subreddit/**").permitAll()
+        .antMatchers("/api/posts/**").permitAll()
+        .antMatchers("/api/comments/**").permitAll()
+        .antMatchers("/api/votes/**").permitAll()
         .antMatchers("/api/auth/**").permitAll()
         .antMatchers("/api/test/**").permitAll()
         .antMatchers("/v2/api-docs",

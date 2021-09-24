@@ -71,6 +71,10 @@ public class CommentService {
 
   public List<CommentDto> getAllComments() {
     // TODO Auto-generated method stub
+System.out.println(commentRepository.findAll()
+        .stream()
+        .map(this::mapToDto)
+        .collect(Collectors.toList()));
     return commentRepository.findAll()
         .stream()
         .map(this::mapToDto)
@@ -81,6 +85,7 @@ public class CommentService {
     // TODO Auto-generated method stub
     Comment comment = commentRepository.findById(id)
         .orElseThrow(() -> new SpringRedditException("cannot find comment with id " + id));
+    
     return CommentDto.builder()
         .id(comment.getId())
         .text(comment.getText())

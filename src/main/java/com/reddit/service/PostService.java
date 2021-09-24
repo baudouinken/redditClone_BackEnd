@@ -2,6 +2,7 @@ package com.reddit.service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -15,10 +16,13 @@ import com.reddit.exception.SpringRedditException;
 import com.reddit.model.Post;
 import com.reddit.model.Subreddit;
 import com.reddit.model.User;
+import com.reddit.model.Vote;
+import com.reddit.model.VoteType;
 import com.reddit.repository.CommentRepository;
 import com.reddit.repository.PostRepository;
 import com.reddit.repository.SubredditRepository;
 import com.reddit.repository.UserRepository;
+import com.reddit.repository.VoteRepository;
 
 @Service
 public class PostService {
@@ -34,6 +38,9 @@ public class PostService {
 
   @Autowired
   private PostRepository postRepository;
+  
+  @Autowired
+  private VoteRepository voteRepository;
 
   @Autowired
   private CommentRepository commentRepository;
@@ -77,6 +84,8 @@ public class PostService {
         .voteCount(post.getVoteCount())
         .commentCount(commentCount(post))
         .duration(getDuration(post))
+        .upVote(isPostUpVoted(post))
+        .downVote(isPostDownVoted(post))
         .build();
   }
 
@@ -129,6 +138,8 @@ public class PostService {
         .voteCount(post.getVoteCount())
         .commentCount(commentCount(post))
         .duration(getDuration(post))
+        .upVote(isPostUpVoted(post))
+        .downVote(isPostDownVoted(post))
         .build();
 
     return response;
@@ -149,5 +160,24 @@ public class PostService {
   String getDuration(Post post) {
     return TimeAgo.using(post.getCreatedDate().toEpochMilli());
   }
+  
+  boolean isPostUpVoted(Post post) {
+    return checkVoteType(post, VoteType.UPVOTE);
+}
+
+boolean isPostDownVoted(Post post) {
+    return checkVoteType(post, VoteType.DOWNVOTE);
+}
+
+private boolean checkVoteType(Post post, VoteType voteType) {
+    if (authService.isLoggedIn()) {
+        Optional<Vote> voteForPostByUser =
+                voteRepository.findTopByPostAndUserOrderByIdDesc(post,
+                        authService.getCurrentUser());
+        return voteForPostByUser.filter(vote -> vote.getVoteType().equals(voteType))
+                .isPresent();
+    }
+    return false;
+}
 
 }

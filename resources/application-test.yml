@@ -1,0 +1,37 @@
+logging:
+  level:
+    org.springframework:                              INFO
+    org.apache:                                       INFO
+    com.siemens.mo.eh:                                DEBUG
+
+spring:
+
+
+  flyway:
+    enabled:                                          false
+
+  datasource: 
+    url:                                              jdbc:h2:mem:testdb;MVCC=true;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    username:                                         sa
+    password:
+    driver-class-name:                                org.h2.Driver
+    type:                                             com.zaxxer.hikari.HikariDataSource
+    hikari:
+      idle-timeout:                                   120000
+      connection-test-query:                          SELECT 1
+      maximum-pool-size:                              150
+
+  jpa:
+    hibernate:
+      ddl-auto:                                       create
+    show-sql:                                         false
+    database-platform:                                org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults:      false
+      hibernate.jdbc.batch_size:                      100
+
+      
+
+com.auth0.domain: siemens-qa-mo.eu.auth0.com
+com.auth0.clientId: xZPhjn9nHSjolI2eGxgLccdW4Qn8tSdq
+com.auth0.clientSecret: Qddme2smEdZy9RXROOxA6rmH3c_6QfvuKa3c9pu4cSGm6OJVgRD_zlnWgSEj45ls

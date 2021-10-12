@@ -82,7 +82,7 @@ public class AuthService {
     mailService.sendMessage(new NotificationEmail("Please Activate Your Account ", user.getEmail(),
         "Thank you to signing up to Spring Reddit, " +
             "\n Please click on link below to activate your account : " +
-            "http://localhost:8080/api/auth/accountVerification/" + token));
+            "https://reddit-app-ken.herokuapp.com/api/auth/accountVerification/" + token));
   }
 
   private String generateVerificationToken(User user) {

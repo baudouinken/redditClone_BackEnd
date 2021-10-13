@@ -16,6 +16,7 @@ import com.reddit.exception.SpringRedditException;
 import com.reddit.mapper.SubredditMapper;
 import com.reddit.model.Post;
 import com.reddit.model.Subreddit;
+import com.reddit.model.User;
 import com.reddit.model.Vote;
 import com.reddit.model.VoteType;
 import com.reddit.repository.CommentRepository;
@@ -53,6 +54,8 @@ public class SubredditService {
   private SubredditRepository subredditRepository;
 
   public Subreddit save(SubredditDto subredditDto) {
+    
+    User user = authService.getCurrentUser();
 
     Subreddit subreddit = Subreddit.builder()
         .name("r/"+subredditDto.getName())
@@ -62,6 +65,7 @@ public class SubredditService {
     // easy with mapstruct
     //Subreddit subreddit = subredditMapper.mapDtoToSubreddit(subredditDto);
     subreddit.setCreatedDate(Instant.now());
+    subreddit.setUser(user);
 
     return subredditRepository.save(subreddit);
   }

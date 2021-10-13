@@ -51,7 +51,7 @@ public class SubredditService {
         .orElseThrow(() -> new SpringRedditException("No Subreddit found with the id " + id));
 
     return SubredditDto.builder().name(subreddit.getName()).id(subreddit.getId())
-        .numberOfPosts(subreddit.getPosts().size()).description(subreddit.getDescription()).build();
+        .numberOfPosts(subreddit.getPosts().size()).description(subreddit.getDescription()).posts(subreddit.getPosts()).build();
   }
 
   public SubredditDto update(UUID id, SubredditDto subredditDto) {

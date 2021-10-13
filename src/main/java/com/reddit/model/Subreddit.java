@@ -18,8 +18,6 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -50,6 +48,6 @@ public class Subreddit {
   private User user;
   
   @OneToMany(mappedBy = "subreddit")
-  @JsonIgnore
+  //@JsonIgnore
   private List<Post> posts = new ArrayList<>();
 }

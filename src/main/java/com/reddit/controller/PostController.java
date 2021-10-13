@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reddit.dto.PostDto;
 import com.reddit.dto.PostResponse;
-import com.reddit.model.Post;
 import com.reddit.service.PostService;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +32,7 @@ public class PostController {
   private PostService postService;
 
   @PostMapping
-  public Post createPost(@RequestBody PostDto postDto) {
+  public PostResponse createPost(@RequestBody PostDto postDto) {
     return postService.save(postDto);
   }
 

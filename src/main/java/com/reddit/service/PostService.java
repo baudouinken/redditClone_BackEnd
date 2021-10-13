@@ -45,7 +45,7 @@ public class PostService {
   @Autowired
   private CommentRepository commentRepository;
 
-  public Post save(PostDto postDto) {
+  public PostResponse save(PostDto postDto) {
 
     User user = authService.getCurrentUser();
 
@@ -62,7 +62,7 @@ public class PostService {
         .voteCount(0)
         .build();
 
-    return postRepository.save(post);
+    return mapToDto(postRepository.save(post));
   }
 
   public List<PostResponse> getAllPosts() {

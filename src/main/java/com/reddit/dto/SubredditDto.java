@@ -20,5 +20,6 @@ public class SubredditDto {
   private String description;
   private int numberOfPosts;
   private List<PostResponse> posts = new ArrayList<>();
+  private String createdBy;
 
 }
